@@ -43,6 +43,9 @@
                           <div class="row">
                             <div class="col-md-2">
                               <label>No Surat</label>
+                              <div class="small text-muted">
+                                <em>No : 001/LAB-TIF/PEN/06/2016</em>
+                              </div>
                             </div>
                             <div class="col-md-10 form-group">
                               <input

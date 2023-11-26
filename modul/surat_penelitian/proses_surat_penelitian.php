@@ -2,24 +2,34 @@
     require('../../vendor/autoload.php'); // Mengimpor autoloader TCPDF
     require('../../koneksi.php');
 if (isset($_POST['generate'])) {
-    $query = "SELECT nama,nip FROM petugas WHERE jabatan = 'Kepala Laboratorium Jaringan'"; // Ganti dengan query yang sesuai
-    $result = $conn->query($query);
-    if ($result) {
-        $row = $result->fetch_assoc();
-        $kepalaLabJaringan = $row['nama'];
-        $nipKepalaLabJaringan = $row['nip'];
+    // Ambil data kepala laboratorium jaringan
+    $queryJaringan = "SELECT nama, nip, ttd FROM petugas WHERE jabatan = 'Kepala Laboratorium Jaringan'";
+    $resultJaringan = $conn->query($queryJaringan);
+
+    if ($resultJaringan) {
+        $rowJaringan = $resultJaringan->fetch_assoc();
+        $kepalaLabJaringan = $rowJaringan['nama'];
+        $nipKepalaLabJaringan = $rowJaringan['nip'];
+        $ttdKepalaLabJaringan = $rowJaringan['ttd']; // Nama kolom yang menyimpan nama file gambar
     } else {
         echo "Kesalahan dalam menjalankan query: " . $conn->error;
     }
-    $query = "SELECT nama,nip FROM petugas WHERE jabatan = 'Kepala Laboratorium Pemrograman'"; // Ganti dengan query yang sesuai
-    $result = $conn->query($query);
-    if ($result) {
-        $row = $result->fetch_assoc();
-        $kepalaLabPemrograman = $row['nama'];
-        $nipKepalaLabPemrograman = $row['nip'];
+
+    // Ambil data kepala laboratorium pemrograman
+    $queryPemrograman = "SELECT nama, nip, ttd FROM petugas WHERE jabatan = 'Kepala Laboratorium Pemrograman'";
+    $resultPemrograman = $conn->query($queryPemrograman);
+
+    if ($resultPemrograman) {
+        $rowPemrograman = $resultPemrograman->fetch_assoc();
+        $kepalaLabPemrograman = $rowPemrograman['nama'];
+        $nipKepalaLabPemrograman = $rowPemrograman['nip'];
+        $ttdKepalaLabPemrograman = $rowPemrograman['ttd']; // Nama kolom yang menyimpan nama file gambar
     } else {
         echo "Kesalahan dalam menjalankan query: " . $conn->error;
     }
+    // Gunakan data yang diambil untuk menentukan nama file gambar
+    $imagePathJaringan = '../../uploads/' . $ttdKepalaLabJaringan;
+    $imagePathPemrograman = '../../uploads/' . $ttdKepalaLabPemrograman;
     if ($_SERVER["REQUEST_METHOD"] == "POST") {
         $noSurat = $_POST["noSurat"];
         $nama = $_POST["nama"];
@@ -146,7 +156,7 @@ if (isset($_POST['generate'])) {
             // Baris 3
             $pdf->Cell(35, $cellHeight, 'Judul Tugas Akhir', $cellBorder);
             $pdf->Cell(5, $cellHeight, ':', $cellBorder);
-            $pdf->MultiCell(110, $cellHeight, $judul, $cellBorder);
+            $pdf->MultiCell(110, $cellHeight, $judul, $cellBorder, 1, 'L');
             $pdf->Ln(); // Pindah ke baris berikutnya
 
 
@@ -217,16 +227,16 @@ if (isset($_POST['generate'])) {
             $pdf->Cell($cellWidth, $cellHeight, $ttdTengah, $cellBorder);
             $pdf->Cell($cellWidth, $cellHeight, $ttdKanan, $cellBorder);
             $pdf->Ln(); // Pindah ke baris berikutnya
-            // $pdf->Image('../../TTD Pak Dadang.png', 30, $pdf->GetY(), 0, 25, 'PNG', '', 'T', false, 300, '', false, false, 0, false, false, false);
-            // $pdf->Image('../../TTD Pak Bangun.png', 110, $pdf->GetY(), 0, 25, 'PNG', '', 'T', false, 300, '', false, false, 0, false, false, false);
+            $pdf->Image($imagePathJaringan, 140, $pdf->GetY(), 0, 20, 'PNG', '', 'T', false, 300, '', false, false, 0, false, false, false);
+            $pdf->Image($imagePathPemrograman, 70, $pdf->GetY(), 0, 20, 'PNG', '', 'T', false, 300, '', false, false, 0, false, false, false);
             
             // Memulai tabel di posisi X yang baru dihitung
             $pdf->SetX($tableX);
 
             // Baris 2
-            $pdf->Cell($cellWidth, 25, '', $cellBorder);
-            $pdf->Cell($cellWidth, 25, '', $cellBorder);
-            $pdf->Cell($cellWidth, 25, '', $cellBorder);
+            $pdf->Cell($cellWidth, 20, '', $cellBorder);
+            $pdf->Cell($cellWidth, 20, '', $cellBorder);
+            $pdf->Cell($cellWidth, 20, '', $cellBorder);
             $pdf->Ln(); // Pindah ke baris berikutnya
             
 

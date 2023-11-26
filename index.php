@@ -51,6 +51,8 @@
       href="assets/extensions/toastify-js/src/toastify.css"
     />
     <link rel="stylesheet" href="assets/css/pages/filepond.css" />
+    <link rel="stylesheet" href="assets/css/pages/lightbox.min.css">
+    <link href="assets/data_table/datatables.min.css" rel="stylesheet">
   </head>
 
   <body>
@@ -174,5 +176,7 @@
     <script src="assets/extensions/filepond/filepond.js"></script>
     <script src="assets/extensions/toastify-js/src/toastify.js"></script>
     <script src="assets/js/pages/filepond.js"></script>
+    <script src="assets/js/pages/lightbox.min.js"></script>
+    <script src="assets/data_table/datatables.min.js"></script>
   </body>
 </html>

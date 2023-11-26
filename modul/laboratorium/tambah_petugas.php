@@ -41,64 +41,51 @@
                   </div>
                   <div class="card-content">
                     <div class="card-body">
-                      <form class="form form-horizontal" action="modul/laboratorium/proses_petugas.php" method="POST" target='blank' enctype="multipart/form-data">
+                      <form class="form form-horizontal" action="modul/laboratorium/proses_petugas.php" method="POST" enctype="multipart/form-data">
                         <div class="form-body">
                           <div class="row">
                             <div class="col-md-2">
                               <label>NIP</label>
                             </div>
                             <div class="col-md-10 form-group">
-                              <input
-                                type="text"
-                                id="nip"
+                              <input 
                                 class="form-control"
-                                name="nip"
-                                placeholder="NIP Petugas"
-                                required
-                              />
+                                type="text" 
+                                name="nip" 
+                                required>
                             </div>
                             <div class="col-md-2">
-                              <label>Nama Lengkap</label>
+                              <label>Nama</label>
                             </div>
                             <div class="col-md-10 form-group">
-                              <input
-                                type="text"
-                                id="nama"
+                              <input 
                                 class="form-control"
-                                name="nama"
-                                placeholder="Nama Lengkap Petugas"
-                                required
-                              />
+                                type="text" 
+                                name="nama" 
+                                required>
                             </div>
                             <div class="col-md-2">
                               <label>Jabatan</label>
                             </div>
                             <div class="col-md-10 form-group">
-                              <input
-                                type="text"
-                                id="jabatan"
+                              <input 
                                 class="form-control"
-                                name="jabatan"
-                                placeholder="Jabatan di Laboratorium"
-                                required
-                              />
+                                type="text" 
+                                name="jabatan" 
+                                required>
                             </div>
                             <div class="col-md-2">
-                              <label>Tanda Tangan</label>
+                              <label>Tanda Tangan (Ttd)</label>
                             </div>
                             <div class="col-md-10 form-group">
-                              <input 
-                                type="file" 
-                                name="ttd"
-                                id="ttd" 
-                                class="basic-filepond"
-                                accept="image/*" required>
+                              <input type="file" name="ttd" accept="image/*" required>
                             </div>
+
                             <div class="col-sm-12 d-flex justify-content-end">
                               <button
                                 type="submit"
                                 class="btn btn-primary me-1 mb-1"
-                                name="simpan" 
+                                name="submit" 
                               >
                               Simpan
                               </button>

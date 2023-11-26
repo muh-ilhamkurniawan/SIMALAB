@@ -15,19 +15,58 @@ if ($key=='hapus_laboratorium') {
 		echo "error".$conn->error;
 	}
 }
-if ($key=='hapus_petugas') {
-	$nipPetugas = $_GET['id'];
+// if ($key=='hapus_petugas') {
+// 	$nipPetugas = $_GET['id'];
+//     $nipPetugas = $conn->real_escape_string($nipPetugas);
+//     $sqlHapusPetugas= "";
+//     $sqlHapusPetugas= "delete from petugas where nip ='".$nipPetugas."'";
+//     if ($conn->query($sqlHapusPetugas)===TRUE) {
+// 		echo "<script>window.alert('Data Petugas Terhapus');
+//         window.location=('index.php?r=organisasi')</script>";
+// 	}
+// 	else{
+// 		echo "error".$conn->error;
+// 	}
+// }
+if ($key == 'hapus_petugas') {
+    $nipPetugas = $_GET['id'];
     $nipPetugas = $conn->real_escape_string($nipPetugas);
-    $sqlHapusPetugas= "";
-    $sqlHapusPetugas= "delete from petugas where nip ='".$nipPetugas."'";
-    if ($conn->query($sqlHapusPetugas)===TRUE) {
-		echo "<script>window.alert('Data Petugas Terhapus');
-        window.location=('index.php?r=organisasi')</script>";
-	}
-	else{
-		echo "error".$conn->error;
-	}
+
+    // Ambil nama file gambar sebelum hapus
+    $sqlGetGambar = "SELECT ttd FROM petugas WHERE nip = ?";
+    $stmtGetGambar = $conn->prepare($sqlGetGambar);
+    $stmtGetGambar->bind_param("s", $nipPetugas);
+    $stmtGetGambar->execute();
+    $stmtGetGambar->store_result();
+
+    // Jika ada data, ambil nama file gambar dan hapus file tersebut
+    if ($stmtGetGambar->num_rows > 0) {
+        $stmtGetGambar->bind_result($gambarPetugas);
+        $stmtGetGambar->fetch();
+
+        // Hapus gambar lama jika file tersebut ada
+        if (!empty($gambarPetugas) && file_exists('uploads/' . $gambarPetugas)) {
+            unlink('uploads/' . $gambarPetugas);
+        }
+    }
+
+    // Hapus data petugas dari database
+    $sqlHapusPetugas = "DELETE FROM petugas WHERE nip = ?";
+    $stmtHapusPetugas = $conn->prepare($sqlHapusPetugas);
+    $stmtHapusPetugas->bind_param("s", $nipPetugas);
+
+    if ($stmtHapusPetugas->execute()) {
+        echo "<script>window.alert('Data Petugas Terhapus');
+            window.location=('index.php?r=organisasi')</script>";
+    } else {
+        echo "error" . $conn->error;
+    }
+
+    // Tutup pernyataan
+    $stmtHapusPetugas->close();
+    $stmtGetGambar->close();
 }
+
 if ($key=='hapus_surat_bebas') {
 	$noSuratBebas = $_GET['id'];
     $noSuratBebas = $conn->real_escape_string($noSuratBebas);

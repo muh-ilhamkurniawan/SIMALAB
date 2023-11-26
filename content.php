@@ -41,6 +41,9 @@ if (isset($_GET['r'])) {
 	if ($key == 'edit_surat_penelitian') {
 		include 'modul/surat_penelitian/edit_surat_penelitian.php';
 	}
+	if ($key == 'lihat_surat_penelitian') {
+		include 'modul/surat_penelitian/lihat_surat_penelitian.php';
+	}
 	if ($key == 'buat_surat_peminjaman') {
 		include 'modul/surat_peminjaman/buat_surat_peminjaman.php';
 	}
@@ -49,6 +52,9 @@ if (isset($_GET['r'])) {
 	}
 	if ($key == 'edit_surat_peminjaman') {
 		include 'modul/surat_peminjaman/edit_surat_peminjaman.php';
+	}
+	if ($key == 'lihat_surat_peminjaman') {
+		include 'modul/surat_peminjaman/lihat_surat_peminjaman.php';
 	}
 	if ($key == 'tambah_inventaris') {
 		include 'modul\inventarisasi\tambah_inventaris.php';
@@ -67,6 +73,9 @@ if (isset($_GET['r'])) {
 	}
 	if ($key == 'edit_inventarisLab') {
 		include 'modul\inventarisasi\edit_inventaris_lab.php';
+	}
+	if ($key == 'lihat_inventarisLab') {
+		include 'modul\inventarisasi\lihat_inventaris_lab.php';
 	}
 } else {
 	// Tambahkan nilai default di sini, misalnya:

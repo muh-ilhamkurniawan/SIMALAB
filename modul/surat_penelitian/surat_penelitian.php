@@ -7,7 +7,7 @@
                   Data surat selesai penelitian laboratorium jurusan Informatika Universitas Jenderal Soedirman.
                 </p>
                 <div class="buttons">
-                      <a href="index.php" class="btn btn-success">Kembali</a>
+                      <a href="index.php?r=lihat_surat_penelitian" class="btn btn-success">Kembali</a>
                 </div>
               </div>
               <div class="col-12 col-md-6 order-md-2 order-first">
@@ -27,13 +27,30 @@
               </div>
             </div>
           </div>
-
+          <?php
+            if (isset($_POST['tgl1']) && isset($_POST['tgl2'])) {
+              $var1 = $_POST['tgl1'];
+              $var2 = $_POST['tgl2'];
+              $tgl1 = str_replace('/', '-', $var1);
+              $date1 = date('Y-m-d', strtotime($tgl1));
+              $tgl2 = str_replace('/', '-', $var2);
+              $date2 = date('Y-m-d', strtotime($tgl2));
+              $rentang = $var1." Sampai ".$var2;
+            
+              $sqlkelas = "select * from surat_penelitian where tanggal between '".$date1."' and '".$date2."' order by tanggal asc";
+            } else {
+              // Handle jika tgl1 atau tgl2 tidak diatur
+              $sqlkelas = "select * from surat_penelitian order by tanggal asc";
+              $rentang = '';
+            }
+            
+          ?>
           <!-- Basic Tables start -->
           <section class="section">
             <div class="card">
-              <div class="card-header">Data surat selesai penelitian yang sudah dibuat</div>
+              <div class="card-header">Data surat selesai penelitian yang sudah dibuat <?php echo $rentang; ?></div>
               <div class="card-body">
-                <table class="table" id="table1">
+                <table class="table" id="table-surat-penelitian">
                   <thead>
                     <tr>
                       <th>No Surat</th>
@@ -47,11 +64,10 @@
                   </thead>
                   <tbody>
                   <?php
-                    $sqlkelas = "select no_surat, nama, nim, judul, tanggal, namaDospem, nipDospem from surat_penelitian";
-                    $resultkelas = $conn->query($sqlkelas);
-                    if ($resultkelas->num_rows>0) {
-                        while ($row = $resultkelas->fetch_assoc()) {
-                            ?>
+                        $resultkelas = $conn->query($sqlkelas);
+                      if ($resultkelas->num_rows>0) {
+                          while ($row = $resultkelas->fetch_assoc()) {
+                              ?>
                             <tr>
                                 <td>
                                   <?php echo $row['no_surat'];?>
@@ -85,3 +101,41 @@
           </section>
           <!-- Basic Tables end -->
         </div>
+        <script>
+           // table serverside
+           $('document').ready(function () {
+            $('#table-surat-penelitian').DataTable({
+            dom: '<"container-fluid mt-3"<"row mb-1"<"col"l><"col"f>><"row"<"col"B>>>r<"mx-3"t><"container-fluid mb-5"<"row"<"col"i><"col"p>>>',
+            orderCellsTop: true,
+            buttons: [
+            {
+                extend: 'excel',
+                title: 'Data surat selesai penelitian laboratorium jurusan Informatika Universitas Jenderal Soedirman.',
+                exportOptions: {
+                    columns: [0, 1, 2, 3, 4]
+                }
+            },
+            {
+                extend: 'pdf',
+                title: 'Data surat selesai penelitian laboratorium jurusan Informatika Universitas Jenderal Soedirman.',
+                exportOptions: {
+                    columns: [0, 1, 2, 3, 4]
+                }
+            },
+            {
+                extend: 'print',
+                title: 'Data surat selesai penelitian laboratorium jurusan Informatika Universitas Jenderal Soedirman.',
+                exportOptions: {
+                    columns: [0, 1, 2, 3, 4]
+                }
+            }
+          ],
+            lengthMenu: [
+                [10, 25, 50, -1],
+                ['10', '25', '50', 'All']
+            ],
+            responsive: false,
+            order: [[ 0, 'asc' ]]
+          })
+        })
+        </script>

@@ -2,27 +2,34 @@
     require('../../vendor/autoload.php'); // Mengimpor autoloader TCPDF
     require('../../koneksi.php');
 if (isset($_POST['generate'])) {
-    $queryJaringan = "SELECT nama, nip FROM petugas WHERE jabatan = 'Kepala Laboratorium Jaringan'";
-    $resultJaringan = $conn->query($queryJaringan);
-
-    if ($resultJaringan) {
-        $rowJaringan = $resultJaringan->fetch_assoc();
-        $kepalaLabJaringan = $rowJaringan['nama'];
-        $nipKepalaLabJaringan = $rowJaringan['nip'];
-    } else {
-        echo "Kesalahan dalam menjalankan query: " . $conn->error;
-    }
-
-    $queryPemrograman = "SELECT nama, nip FROM petugas WHERE jabatan = 'Kepala Laboratorium Pemrograman'";
-    $resultPemrograman = $conn->query($queryPemrograman);
-
-    if ($resultPemrograman) {
-        $rowPemrograman = $resultPemrograman->fetch_assoc();
-        $kepalaLabPemrograman = $rowPemrograman['nama'];
-        $nipKepalaLabPemrograman = $rowPemrograman['nip'];
-    } else {
-        echo "Kesalahan dalam menjalankan query: " . $conn->error;
-    }
+        // Ambil data kepala laboratorium jaringan
+        $queryJaringan = "SELECT nama, nip, ttd FROM petugas WHERE jabatan = 'Kepala Laboratorium Jaringan'";
+        $resultJaringan = $conn->query($queryJaringan);
+    
+        if ($resultJaringan) {
+            $rowJaringan = $resultJaringan->fetch_assoc();
+            $kepalaLabJaringan = $rowJaringan['nama'];
+            $nipKepalaLabJaringan = $rowJaringan['nip'];
+            $ttdKepalaLabJaringan = $rowJaringan['ttd']; // Nama kolom yang menyimpan nama file gambar
+        } else {
+            echo "Kesalahan dalam menjalankan query: " . $conn->error;
+        }
+    
+        // Ambil data kepala laboratorium pemrograman
+        $queryPemrograman = "SELECT nama, nip, ttd FROM petugas WHERE jabatan = 'Kepala Laboratorium Pemrograman'";
+        $resultPemrograman = $conn->query($queryPemrograman);
+    
+        if ($resultPemrograman) {
+            $rowPemrograman = $resultPemrograman->fetch_assoc();
+            $kepalaLabPemrograman = $rowPemrograman['nama'];
+            $nipKepalaLabPemrograman = $rowPemrograman['nip'];
+            $ttdKepalaLabPemrograman = $rowPemrograman['ttd']; // Nama kolom yang menyimpan nama file gambar
+        } else {
+            echo "Kesalahan dalam menjalankan query: " . $conn->error;
+        }
+        // Gunakan data yang diambil untuk menentukan nama file gambar
+        $imagePathJaringan = '../../uploads/' . $ttdKepalaLabJaringan;
+        $imagePathPemrograman = '../../uploads/' . $ttdKepalaLabPemrograman;
 
     if ($_SERVER["REQUEST_METHOD"] == "POST") {
         $nama = $_POST["nama"];
@@ -201,7 +208,7 @@ if (isset($_POST['generate'])) {
 
             $cellWidth = 55;
             $cellHeight = 5;
-            $cellBorder = 0;
+            $cellBorder = 1;
             $pageWidth = $pdf->GetPageWidth();
             $tableWidth = $cellWidth * 3;
             $tableX = ($pageWidth - $tableWidth) / 2;
@@ -212,10 +219,14 @@ if (isset($_POST['generate'])) {
             $pdf->Cell($cellWidth, $cellHeight, $ttdTengah, $cellBorder);
             $pdf->Cell($cellWidth, $cellHeight, $ttdKanan, $cellBorder);
             $pdf->Ln();
+            $pdf->Image($imagePathPemrograman, 15, $pdf->GetY(), 0, 20, 'PNG', '', 'T', false, 300, '', false, false, 0, false, false, false);
+            $pdf->Image($imagePathJaringan, 80, $pdf->GetY(), 0, 20, 'PNG', '', 'T', false, 300, '', false, false, 0, false, false, false);
 
-            $pdf->Cell($cellWidth, 25, '', $cellBorder);
-            $pdf->Cell($cellWidth, 25, '', $cellBorder);
-            $pdf->Cell($cellWidth, 25, '', $cellBorder);
+            $pdf->SetX($tableX);
+
+            $pdf->Cell($cellWidth, 20, '', $cellBorder);
+            $pdf->Cell($cellWidth, 20, '', $cellBorder);
+            $pdf->Cell($cellWidth, 20, '', $cellBorder);
             $pdf->Ln();
 
             $pdf->SetX($tableX);

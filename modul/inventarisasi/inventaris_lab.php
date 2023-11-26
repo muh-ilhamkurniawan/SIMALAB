@@ -7,7 +7,7 @@
                   Data alat dan barang per laboratorium jurusan Informatika Universitas Jenderal Soedirman.
                 </p>
                 <div class="buttons">
-                      <a href="index.php?r=inventaris" class="btn btn-success">Kembali</a>
+                      <a href="index.php" class="btn btn-success">Kembali</a>
                       <a href="index.php?r=tambah_inventarisLab" class="btn btn-success">Tambah Data</a>
                 </div>
               </div>
@@ -34,7 +34,7 @@
             <div class="card">
               <div class="card-header">Data Informasi Inventaris per Laboratorium </div>
               <div class="card-body">
-                <table class="table" id="table1">
+                <table class="table" id="table-inventaris-lab">
                   <thead>
                     <tr>
                       <th>Lokasi</th>
@@ -92,3 +92,42 @@
           </section>
           <!-- Basic Tables end -->
         </div>
+        
+        <script>
+           // table serverside
+           $('document').ready(function () {
+            $('#table-inventaris-lab').DataTable({
+            dom: '<"container-fluid mt-3"<"row mb-1"<"col"l><"col"f>><"row"<"col"B>>>r<"mx-3"t><"container-fluid mb-5"<"row"<"col"i><"col"p>>>',
+            orderCellsTop: true,
+            buttons: [
+            {
+                extend: 'excel',
+                title: 'Data alat dan barang per laboratorium jurusan Informatika Universitas Jenderal Soedirman.',
+                exportOptions: {
+                    columns: [0, 1, 2, 3, 4]
+                }
+            },
+            {
+                extend: 'pdf',
+                title: 'Data alat dan barang per laboratorium jurusan Informatika Universitas Jenderal Soedirman.',
+                exportOptions: {
+                    columns: [0, 1, 2, 3, 4]
+                }
+            },
+            {
+                extend: 'print',
+                title: 'Data alat dan barang per laboratorium jurusan Informatika Universitas Jenderal Soedirman.',
+                exportOptions: {
+                    columns: [0, 1, 2, 3, 4]
+                }
+            }
+          ],
+            lengthMenu: [
+                [10, 25, 50, -1],
+                ['10', '25', '50', 'All']
+            ],
+            responsive: false,
+            order: [[ 0, 'asc' ]]
+          })
+        })
+        </script>

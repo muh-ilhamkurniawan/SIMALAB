@@ -34,7 +34,7 @@
             <div class="card">
               <div class="card-header">Data Informasi Inventaris Laboratorium </div>
               <div class="card-body">
-                <table class="table" id="table1">
+                <table class="table" id="table-inventaris">
                   <thead>
                     <tr>
                       <th>Kode</th>
@@ -80,3 +80,41 @@
           </section>
           <!-- Basic Tables end -->
         </div>
+        <script>
+           // table serverside
+           $('document').ready(function () {
+            $('#table-inventaris').DataTable({
+            dom: '<"container-fluid mt-3"<"row mb-1"<"col"l><"col"f>><"row"<"col"B>>>r<"mx-3"t><"container-fluid mb-5"<"row"<"col"i><"col"p>>>',
+            orderCellsTop: true,
+            buttons: [
+            {
+                extend: 'excel',
+                title: 'Data alat dan barang laboratorium jurusan Informatika Universitas Jenderal Soedirman.',
+                exportOptions: {
+                    columns: [0, 1, 2, 3, 4, 5, 6]
+                }
+            },
+            {
+                extend: 'pdf',
+                title: 'Data alat dan barang laboratorium jurusan Informatika Universitas Jenderal Soedirman.',
+                exportOptions: {
+                    columns: [0, 1, 2, 3, 4, 5, 6]
+                }
+            },
+            {
+                extend: 'print',
+                title: 'Data alat dan barang laboratorium jurusan Informatika Universitas Jenderal Soedirman.',
+                exportOptions: {
+                    columns: [0, 1, 2, 3, 4, 5, 6]
+                }
+            }
+          ],
+            lengthMenu: [
+                [10, 25, 50, -1],
+                ['10', '25', '50', 'All']
+            ],
+            responsive: false,
+            order: [[ 0, 'asc' ]]
+          })
+        })
+        </script>

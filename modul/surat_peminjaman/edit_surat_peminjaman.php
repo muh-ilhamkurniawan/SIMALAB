@@ -166,12 +166,11 @@
                             <div class="col-md-10 form-group" id="alatContainer">
                               <?php
                                 $alatValues = json_decode($show['alat'], true);
-                                $jumlahValues = [];
+                                $jumlahValues = json_decode($show['jumlah'], true);
 
                                 if (is_array($alatValues)) {
                                     foreach ($alatValues as $index => $alatValue) {
                                         $jumlahValue = isset($jumlahValues[$index]) ? $jumlahValues[$index] : '';
-                                        echo ''. $alatValue . ', Jumlah ' . ($index + 1) . ': ' . $jumlahValue . '<br>';
                                         ?>
                                           <div class="input-group mb-3">
                                             <input

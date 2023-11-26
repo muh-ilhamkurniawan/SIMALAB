@@ -44,7 +44,7 @@
                             <div class="col-md-2">
                               <label>No Surat</label>
                               <div class="small text-muted">
-                                <em>No.56/LAB-TIF/BL/9/2023</em>
+                                <em>No : 056/LAB-TIF/BL/9/2023</em>
                               </div>
                             </div>
                             <div class="col-md-10 form-group">

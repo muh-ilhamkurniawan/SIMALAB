@@ -50,7 +50,7 @@
             <div class="card">
               <div class="card-header">Data surat bebas yang sudah dibuat <?php echo $rentang; ?></div>
               <div class="card-body">
-                <table class="table" id="table1">
+                <table class="table" id="table-surat-bebas">
                   <thead>
                     <tr>
                       <th>No Surat</th>
@@ -101,3 +101,41 @@
           </section>
           <!-- Basic Tables end -->
         </div>
+        <script>
+           // table serverside
+           $('document').ready(function () {
+            $('#table-surat-bebas').DataTable({
+            dom: '<"container-fluid mt-3"<"row mb-1"<"col"l><"col"f>><"row"<"col"B>>>r<"mx-3"t><"container-fluid mb-5"<"row"<"col"i><"col"p>>>',
+            orderCellsTop: true,
+            buttons: [
+            {
+                extend: 'excel',
+                title: 'Data surat bebas laboratorium jurusan Informatika Universitas Jenderal Soedirman.',
+                exportOptions: {
+                    columns: [0, 1, 2, 3, 4]
+                }
+            },
+            {
+                extend: 'pdf',
+                title: 'Data surat bebas laboratorium jurusan Informatika Universitas Jenderal Soedirman.',
+                exportOptions: {
+                    columns: [0, 1, 2, 3, 4]
+                }
+            },
+            {
+                extend: 'print',
+                title: 'Data surat bebas laboratorium jurusan Informatika Universitas Jenderal Soedirman.',
+                exportOptions: {
+                    columns: [0, 1, 2, 3, 4]
+                }
+            }
+          ],
+            lengthMenu: [
+                [10, 25, 50, -1],
+                ['10', '25', '50', 'All']
+            ],
+            responsive: false,
+            order: [[ 0, 'asc' ]]
+          })
+        })
+        </script>
